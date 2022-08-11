@@ -50,6 +50,15 @@
       repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
       state: present
 
+  - name: Fix docker cgroup driver
+    lineinfile:
+      path: /etc/docker/daemon.json
+      line: '{{ item }}'
+    with_items:
+      - '{'
+      - '  "exec-opts": ["native.cgroupdriver=systemd"]'
+      - '}'
+
   - name: Install docker and its dependecies
     apt:
       name:
