@@ -52,6 +52,7 @@
 
   - name: Fix docker cgroup driver
     lineinfile:
+      create: yes
       path: /etc/docker/daemon.json
       line: '{{ item }}'
     with_items:
