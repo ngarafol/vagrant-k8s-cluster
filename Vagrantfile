@@ -1,4 +1,4 @@
-IMAGE_NAME = "ubuntu/focal64"
+IMAGE_NAME = "ubuntu/jammy64"
 
 # check versions here e.g.
 # curl -s https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages | grep Version | awk '{print $2}'
