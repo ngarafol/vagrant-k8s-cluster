@@ -1,3 +1,5 @@
+# choose ubuntu version, focal / 20.04 or jammy / 22.04 ...
+
 IMAGE_NAME = "ubuntu/jammy64"
 
 # check versions here e.g.
@@ -9,6 +11,7 @@ N = 2
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
 
+# control node needs 2cpu and 2gb, so dont go under
     config.vm.provider "virtualbox" do |v|
         v.memory = 2048
         v.cpus = 2
@@ -35,7 +38,8 @@ Vagrant.configure("2") do |config|
             worker.vm.box = IMAGE_NAME
             worker.vm.network "private_network", ip: "10.10.1.#{i + 10}"
             worker.vm.hostname = "worker-#{i}"
-            
+
+# workers with 1cpu and 1gb work, but if you have plenty left, adjust it
 	    worker.vm.provider "virtualbox" do |workerv|
   	    	workerv.memory = 1024
 	    	workerv.cpus = 1
