@@ -26,15 +26,15 @@ Default the following is started/installed:
 * 1 Control node;
 * 2 Worker nodes;
 
-Each node has 2 CPU's configured with each 2GB of RAM. You can change this to your needs by updating the `Vagrantfile`.
+Control node has 2 CPU and 1GB of RAM. Each worker node has 1 CPU's configured with each 1GB of RAM. You can change this to your needs by updating the `Vagrantfile`.
 
 ## Kubernetes version
 
-Kubernetes version 1.19.2 which can be changed in the `Vagrantfile` by looking in the top of the file for the line that starts with: `K8S_VERSION`. You can set that to a more recent version of Kubernetes before you start everything.
+Kubernetes version 1.23.9 (CKA currently is 1.23 :) ) which can be changed in the `Vagrantfile` by looking in the top of the file for the line that starts with: `K8S_VERSION`. You can set that to a more recent version of Kubernetes before you start everything.
 
 ```ruby
     IMAGE_NAME = "ubuntu/bionic64"
-    K8S_VERSION = "1.19.2"
+    K8S_VERSION = "1.23.9"
     N = 2
 ```
 
