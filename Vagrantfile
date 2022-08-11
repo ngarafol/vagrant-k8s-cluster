@@ -1,5 +1,9 @@
-IMAGE_NAME = "ubuntu/bionic64"
-K8S_VERSION = "1.20.2"
+IMAGE_NAME = "ubuntu/focal64"
+
+# check versions here e.g.
+# curl -s https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages | grep Version | awk '{print $2}'
+
+K8S_VERSION = "1.23.9"
 N = 2
 
 Vagrant.configure("2") do |config|
@@ -31,6 +35,12 @@ Vagrant.configure("2") do |config|
             worker.vm.box = IMAGE_NAME
             worker.vm.network "private_network", ip: "10.10.1.#{i + 10}"
             worker.vm.hostname = "worker-#{i}"
+            
+	    worker.vm.provider "virtualbox" do |workerv|
+  	    	workerv.memory = 1024
+	    	workerv.cpus = 1
+	    end
+
             worker.vm.provision "ansible" do |ansible|
                 ansible.playbook = "worker-playbook.yml"
                 ansible.extra_vars = {
@@ -43,3 +53,4 @@ Vagrant.configure("2") do |config|
         end
     end
 end
+
