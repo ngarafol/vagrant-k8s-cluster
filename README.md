@@ -45,6 +45,11 @@ Once you are ready, run the following to start everything:
 ```sh
 vagrant up
 ```
+** If virtualbox is complaining about ip address range used, you could create vbox networks file and fix it, or change ip range to allowed by vbox **
+```
+$ cat /etc/vbox/networks.conf
+* 0.0.0.0/0 ::/0
+```
 
 Once everything is booted, use the following command to logon to the control node:
 
