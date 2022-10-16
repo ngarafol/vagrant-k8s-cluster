@@ -153,6 +153,7 @@
     fetch:
       src: /tmp/join
       dest: /tmp/join
+      remote_src: yes
       flat: True
 
   handlers:

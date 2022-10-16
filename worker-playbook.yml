@@ -105,7 +105,7 @@
     copy:
       src: /tmp/join
       dest: /tmp/join-command.sh
-      remote_src: yes
+#      remote_src: yes
       mode: 0777
     become: false
 
