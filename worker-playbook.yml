@@ -30,16 +30,6 @@
       state: present
       update_cache: yes
 
-  - name: Add an apt signing key for Docker
-    apt_key:
-      url: https://download.docker.com/linux/ubuntu/gpg
-      state: present
-
-  - name: Add apt repository for stable version
-    apt_repository:
-      repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable
-      state: present
-
   - name: Fix docker cgroup driver
     lineinfile:
       create: yes
@@ -50,21 +40,32 @@
       - '  "exec-opts": ["native.cgroupdriver=systemd"]'
       - '}'
 
-  - name: Install docker and its dependecies
+  - name: Create a directory if it does not exist
+    ansible.builtin.file:
+      path: /etc/containerd
+      state: directory
+      mode: '0755'
+
+  - name: Install containerd
     apt:
       name:
-        - docker-ce
-        - docker-ce-cli
-        - containerd.io
+        - containerd
       state: present
       update_cache: yes
     notify:
-      - docker status
+      - containerd status
 
-  - name: Add vagrant user to docker group
-    user:
-      name: vagrant
-      group: docker
+  - name: Configure containerd
+    ansible.builtin.shell: containerd config default | tee /etc/containerd/config.toml
+
+  - name: sed line in containerd config
+    ansible.builtin.shell: sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+
+  - name: Restart containerd
+    service:
+      name: containerd
+      daemon_reload: yes
+      state: restarted
 
   - name: Disable swap
     command: swapoff -a
@@ -113,7 +114,7 @@
     command: sh /tmp/join-command.sh
 
   handlers:
-  - name: docker status
+  - name: containerd status
     service:
-      name: docker
+      name: containerd
       state: started

@@ -5,7 +5,7 @@ IMAGE_NAME = "ubuntu/jammy64"
 # check versions here e.g.
 # curl -s https://packages.cloud.google.com/apt/dists/kubernetes-xenial/main/binary-amd64/Packages | grep Version | awk '{print $2}'
 
-K8S_VERSION = "1.23.9"
+K8S_VERSION = "1.25.3"
 N = 2
 
 Vagrant.configure("2") do |config|
