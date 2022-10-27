@@ -30,11 +30,11 @@ Control node has 2 CPU and 1GB of RAM. Each worker node has 1 CPU's configured w
 
 ## Kubernetes version
 
-Kubernetes version 1.23.9 (CKA currently is 1.23 :) ) which can be changed in the `Vagrantfile` by looking in the top of the file for the line that starts with: `K8S_VERSION`. You can set that to a more recent version of Kubernetes before you start everything.
+Kubernetes version 1.25.3 (CKA currently is 1.25) which can be changed in the `Vagrantfile` by looking in the top of the file for the line that starts with: `K8S_VERSION`. You can set that to a more recent version of Kubernetes before you start everything.
 
 ```ruby
-    IMAGE_NAME = "ubuntu/bionic64"
-    K8S_VERSION = "1.23.9"
+    IMAGE_NAME = "ubuntu/jammy64"
+    K8S_VERSION = "1.25.3"
     N = 2
 ```
 
@@ -66,3 +66,4 @@ In the `examples` [directory](examples/readme.md), you can find some example que
 ## Credits
 
 Combination of code https://graspingtech.com/create-kubernetes-cluster/ and some custom things.
+Containerd migration inspired by https://github.com/justmeandopensource/kubernetes/blob/master/vagrant-provisioning/bootstrap.sh
