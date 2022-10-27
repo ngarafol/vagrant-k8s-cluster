@@ -40,6 +40,36 @@
       repo: deb https://baltocdn.com/helm/stable/debian/ all main
       state: present
 
+  - name: Enable kernel modules
+    lineinfile:
+      create: yes
+      path: /etc/modules-load.d/containerd.conf
+      line: '{{ item }}'
+    with_items:
+      - 'overlay'
+      - 'br_netfilter'
+
+  - name: Add modules
+    community.general.modprobe:
+      name: '{{ item }}'
+      state: present
+    with_items:
+      - 'overlay'
+      - 'br_netfilter'
+
+  - name: Add sysctl lines
+    lineinfile:
+      create: yes
+      path: /etc/sysctl.d/kubernetes.conf
+      line: '{{ item }}'
+    with_items:
+      - 'net.bridge.bridge-nf-call-ip6tables = 1'
+      - 'net.bridge.bridge-nf-call-iptables  = 1'
+      - 'net.ipv4.ip_forward = 1'
+
+  - name: Run sysctl
+    ansible.builtin.shell: sysctl --system >/dev/null 2>&1
+
   - name: Create a directory if it does not exist
     ansible.builtin.file:
       path: /etc/containerd
